@@ -1,8 +1,9 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); //npm i mongoose
+const cryptoJs = require ("crypto-js"); //npm i crypto-js
 const app = express();
 const PORT = 3000;
-require("dotenv").config();
+require("dotenv").config(); //npm i -D dotenv
 
 //DB接続・DB connection
 try {
