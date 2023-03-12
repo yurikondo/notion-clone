@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose"); //npm i mongoose
-const CryptoJs = require ("crypto-js"); //npm i crypto-js
+const CryptoJs = require("crypto-js"); //npm i crypto-js
 const JWT = require("jsonwebtoken"); //npm i jsonwebtoken
 
 const User = require("./src/v1/models/user");
@@ -8,6 +8,7 @@ const app = express();
 const PORT = 3000;
 require("dotenv").config(); //npm i -D dotenv
 
+// json形式でデータを受信したい場合はexpress.json()が必須
 app.use(express.json());
 
 //DB接続・DB connection
@@ -24,7 +25,6 @@ try {
 app.post("/register", async (req, res) => {
   //パスワードの受け取り・Receipt of password
   const password = req.body.password;
-
   try {
     //パスワードの暗号化・Password encryption
     //https://www.npmjs.com/package/crypto-js
@@ -34,11 +34,12 @@ app.post("/register", async (req, res) => {
     const user = await User.create(req.body);
     //JWTの発行・JWT publication
     //user._id は、各ユーザーごとに割り振られたMONGODBに保存されているユーザーのID
-    const token = JWT.sign({id: user._id}, process.env.TOKEN_SECRET_KEY, {
-      expiresIn: "24h"
+    const token = JWT.sign({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
+      expiresIn: "24h",
     });
     //userとtoken情報をjson形式で返す・Return user and token information in json format
-    return res.status(200).json(user, token);
+    //json()はjson形式のものを入れる
+    return res.status(200).json({"user": user, "token": token});
   } catch (err) {
     return res.status(500).json(err);
   }
