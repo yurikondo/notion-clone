@@ -20,7 +20,7 @@ const tokenDecode = (req) => {
 //JWT認証を検証するためのミドルウェア
 exports.verifyToken = async (req, res, next) => {
   const tokenDecoded = tokenDecode(req);
-  if (tokenDecode) {
+  if (tokenDecoded) {
     //そのJWTを一致するユーザーを探してくる
     const user = await User.findById(tokenDecode.id);
     console.log(user);
