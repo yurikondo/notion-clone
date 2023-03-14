@@ -22,7 +22,7 @@ exports.verifyToken = async (req, res, next) => {
   const tokenDecoded = tokenDecode(req);
   if (tokenDecoded) {
     //そのJWTを一致するユーザーを探してくる
-    const user = await User.findById(tokenDecode.id);
+    const user = await User.findById(tokenDecoded.id);
     console.log(user);
 
     if (!user) {
