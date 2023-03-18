@@ -21,8 +21,8 @@ const Authlayout = () => {
           />
           Notionクローン
         </Box>
+        <Outlet />
       </Container>
-      <Outlet />
     </div>
   );
 };
