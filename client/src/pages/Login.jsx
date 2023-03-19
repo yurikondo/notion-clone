@@ -40,13 +40,13 @@ const Login = () => {
 
     //新規登録API
     try {
-      const res = await authApi.register({
+      const res = await authApi.login({
         username,
         password,
       });
       setLoading(false);
       localStorage.setItem("token", res.token);
-      console.log("新規登録に成功しました🎉");
+      console.log("ログインに成功しました🎉");
       navigate("/");
     } catch (err) {
       console.log(`Register.jsxのエラー：${err}`);
