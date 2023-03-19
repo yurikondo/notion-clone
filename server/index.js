@@ -3,10 +3,16 @@ const mongoose = require("mongoose"); //npm i mongoose
 const app = express();
 const PORT = 4000;
 require("dotenv").config(); //npm i -D dotenv
+const cors = require("cors");
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 // json形式でデータを受信したい場合はexpress.json()が必須
 app.use(express.json());
-app.use("/api/v1", require("./src/v1/routes/auth"));
+app.use("/api/v1", require("./src/v1/routes"));
 
 //DB接続・DB connection
 try {
