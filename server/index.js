@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose"); //npm i mongoose
 const app = express();
-const PORT = 3000;
+const PORT = 4000;
 require("dotenv").config(); //npm i -D dotenv
 
 // json形式でデータを受信したい場合はexpress.json()が必須
@@ -15,7 +15,7 @@ try {
   mongoose.connect(process.env.MONGODB_URL);
   console.log("DBと接続中・Connecting to DB 🍏");
 } catch (error) {
-  console.log(error);
+  console.log(`DBと接続時にエラー発生:${error}`);
 }
 
 app.listen(PORT, () => {
