@@ -4,6 +4,7 @@ const User = require("../models/user");
 //クライアントから渡されたJWTが正常か検証
 const tokenDecode = (req) => {
   const bearerHeader = req.headers["authorization"];
+  console.log(bearerHeader);
   if (bearerHeader) {
     const bearer = bearerHeader.split(" ")[1];
     try {
@@ -24,7 +25,6 @@ exports.verifyToken = async (req, res, next) => {
     //そのJWTを一致するユーザーを探してくる
     const user = await User.findById(tokenDecoded.id);
     console.log(user);
-
     if (!user) {
       return res.status(401).json("権限がありません");
     }

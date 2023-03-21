@@ -49,7 +49,7 @@ const Login = () => {
       console.log("ログインに成功しました🎉");
       navigate("/");
     } catch (err) {
-      console.log(`Register.jsxのエラー：${err}`);
+      console.log(`Register.jsxのエラー:${err}`);
       const errors = err.data.errors;
       console.log(errors);
       errors.forEach((err) => {
