@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:4000/api/v1";
 const getToken = () => {
-  localStorage.getItem("token");
+  return localStorage.getItem("token");
 };
 
 const axiosClient = axios.create({
@@ -13,7 +13,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(async (config) => {
   return {
     ...config,
-    header: {
+    headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${getToken()}`, //リクエストヘッダにJWTをつけてサーバーに渡す
     },
