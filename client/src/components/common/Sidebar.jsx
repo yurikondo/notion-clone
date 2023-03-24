@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 function Sidebar() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.value);
-  console.log(useSelector((state)=> state.user));
+  console.log(user);
 
   const logout = () => {
     localStorage.removeItem("token");
