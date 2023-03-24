@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 //https://mongoosejs.com/docs/models.html
 const memoSchema = new mongoose.Schema({
   user: {
-    type: mongoose.schema.types.objectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
@@ -32,4 +32,4 @@ const memoSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("User", memoSchema);
+module.exports = mongoose.model("Memo", memoSchema);
