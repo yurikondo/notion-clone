@@ -14,8 +14,8 @@ const Authlayout = () => {
     //JWTを持っているのか確認する
     const checkAuth = async () => {
       //認証チェック
-      const isAuth = await authUtils.isAuthenticated();
-      if (isAuth) {
+      const user = await authUtils.isAuthenticated();
+      if (!user) {
         navigate("/");
       } else {
         //ユーザーを保存する
