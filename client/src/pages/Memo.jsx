@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TextField, Box, IconButton } from "@mui/material";
+import { TextField, Box, IconButton, getToggleButtonGroupUtilityClass } from "@mui/material";
 import StarBorderOutlined from "@mui/icons-material/StarBorderOutlined";
 import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
 import { useParams } from "react-router-dom";
@@ -80,6 +80,20 @@ const Memo = () => {
       alert(error.message);
     }
   };
+
+  const onIconChange = async(newIcon) => {
+    let tmp = [...memos];
+    const index = tmp.findIndex((e) => e._id === memoId);
+    tmp[index] = { ...tmp[index], icon: newIcon };
+    setIcon(newIcon);
+    dispatch(setMemo(tmp));
+    try {
+      await memoApi.update(memoId,{icon: newIcon})
+    } catch (error) {
+      alert(error)
+    }
+  };
+
   return (
     <>
       <Box
@@ -98,7 +112,7 @@ const Memo = () => {
       </Box>
       <Box sx={{ padding: "10px 50px" }}>
         <Box>
-          <EmojiPicker icon={icon} />
+          <EmojiPicker icon={icon} onChange={onIconChange} />
           <TextField
             onChange={updateTitle}
             value={title}
