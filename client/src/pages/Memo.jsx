@@ -1,13 +1,25 @@
-import React from "react";
-import {
-  TextField,
-  Box,
-  IconButton,
-} from "@mui/material";
+import React, { useEffect } from "react";
+import { TextField, Box, IconButton } from "@mui/material";
 import StarBoderOutlined from "@mui/icons-material/StarBorderOutlined";
 import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
+import { useParams } from "react-router-dom";
+import memoApi from "../api/memoApi";
 
-function Memo() {
+const Memo = () => {
+  const { memoId } = useParams();
+
+  useEffect(() => {
+    const getMemo = async () => {
+      try {
+        const res = memoApi.getOne(memoId);
+        console.log(res);
+      } catch (error) {
+        alert(error);
+      }
+    };
+    getMemo();
+  }, [memoId]);
+
   return (
     <>
       <Box
@@ -39,9 +51,6 @@ function Memo() {
           placeholder="追加"
           variant="outlined"
           fullWidth
-          placeholder="無題"
-          variant="outlined"
-          fullWidth
           sx={{
             ".MuiOutlinedInput-input": { padding: 0 },
             ".MuiOutlinedInput-notchedOutline": { border: "none" },
@@ -51,6 +60,6 @@ function Memo() {
       </Box>
     </>
   );
-}
+};
 
 export default Memo;
