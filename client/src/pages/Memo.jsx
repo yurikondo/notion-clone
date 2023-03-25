@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { TextField, Box, IconButton } from "@mui/material";
-import StarBoderOutlined from "@mui/icons-material/StarBorderOutlined";
+import StarBorderOutlined from "@mui/icons-material/StarBorderOutlined";
 import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import memoApi from "../api/memoApi";
+import { setMemo } from "../redux/features/memoSlice";
 
 const Memo = () => {
   const { memoId } = useParams();
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const memos = useSelector((state) => state.memo.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getMemo = async () => {
@@ -17,7 +23,7 @@ const Memo = () => {
         setTitle(res.title);
         setDescription(res.description);
       } catch (error) {
-        alert(error);
+        alert(error.message);
       }
     };
     getMemo();
@@ -58,8 +64,17 @@ const Memo = () => {
     try {
       const deletedMemo = await memoApi.delete(memoId);
       console.log(deletedMemo);
+      const newMemos = memos.filter((e) => e._id !== memoId);
+
+      if (newMemos.length < 0) {
+        navigate("/memo");
+      } else {
+        navigate(`/memo/${newMemos[0]._id}`);
+      }
+
+      dispatch(setMemo(newMemos));
     } catch (error) {
-      alert(error);
+      alert(error.message);
     }
   };
   return (
@@ -72,7 +87,7 @@ const Memo = () => {
         }}
       >
         <IconButton>
-          <StarBoderOutlined />
+          <StarBorderOutlined />
         </IconButton>
         <IconButton variant="outlined" color="error" onClick={deleteMemo}>
           <DeleteOutlined />
