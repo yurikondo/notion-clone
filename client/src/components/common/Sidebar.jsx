@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Drawer,
   List,
@@ -12,16 +12,28 @@ import AddBoxOutlined from "@mui/icons-material/AddBoxOutlined";
 import assets from "../../assets/index";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import  memoApi  from "../../api/memoApi";
 
 function Sidebar() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.value);
-  console.log(user);
 
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
+
+  useEffect(() => {
+    const getMemos = async () => {
+      try {
+        const res = await memoApi.getAll();
+        console.log(res);
+      } catch (error) {
+        alert(error);
+      }
+    };
+    getMemos();
+  }, []);
 
   return (
     <Drawer
