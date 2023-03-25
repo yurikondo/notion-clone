@@ -30,15 +30,13 @@ function Sidebar() {
     const getMemos = async () => {
       try {
         const res = await memoApi.getAll();
-        console.log(res);
         dispatch(setMemo(res));
-        console.log(memos);
       } catch (error) {
         alert(error);
       }
     };
     getMemos();
-  }, []);
+  }, [dispatch]);
 
   return (
     <Drawer
@@ -104,21 +102,18 @@ function Sidebar() {
             </IconButton>
           </Box>
         </ListItemButton>
-        <ListItemButton>
-          <Typography sx={{ pl: "20px" }} component={Link} to="/memo/afdfs">
-            🗒仮置きのメモ
-          </Typography>
-        </ListItemButton>
-        <ListItemButton>
-          <Typography sx={{ pl: "20px" }} component={Link} to="/memo/afdfs">
-            🗒仮置きのメモ
-          </Typography>
-        </ListItemButton>
-        <ListItemButton>
-          <Typography sx={{ pl: "20px" }} component={Link} to="/memo/afdfs">
-            🗒仮置きのメモ
-          </Typography>
-        </ListItemButton>
+        {memos.map((item, index) => (
+          <ListItemButton
+            sx={{ pl: "20px" }}
+            component={Link}
+            to={`/memo/${item._id}`}
+            key={item._id}
+           >
+            <Typography>
+              {item.icon} {item.title}
+            </Typography>
+          </ListItemButton>
+        ))}
       </List>
     </Drawer>
   );
