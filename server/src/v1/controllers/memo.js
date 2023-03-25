@@ -13,3 +13,13 @@ exports.create = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+exports.getAll = async (req, res) => {
+  try {
+    //メモを全て取得
+    const memos = await Memo.find({user: req.user._id}).sort("-position");
+    res.status(200).json(memos);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
