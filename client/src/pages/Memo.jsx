@@ -23,15 +23,35 @@ const Memo = () => {
     getMemo();
   }, [memoId]);
 
+  let timer;
+  const timeout = 500;
+
   const updateTitle = async (e) => {
+    clearTimeout(timer);
     const newTitle = e.target.value;
     setTitle(newTitle);
 
-    try {
-      await memoApi.update(memoId, { title: newTitle });
-    } catch (error) {
-      console.log(JSON.stringify(error));
-    }
+    timer = setTimeout(async () => {
+      try {
+        await memoApi.update(memoId, { title: newTitle });
+      } catch (error) {
+        console.log(JSON.stringify(error));
+      }
+    }, timeout);
+  };
+
+  const updateDescription = async (e) => {
+    clearTimeout(timer);
+    const newDescription = e.target.value;
+    setDescription(newDescription);
+
+    timer = setTimeout(async () => {
+      try {
+        await memoApi.update(memoId, { description: newDescription });
+      } catch (error) {
+        console.log(JSON.stringify(error));
+      }
+    }, timeout);
   };
 
   return (
@@ -64,6 +84,7 @@ const Memo = () => {
           }}
         />
         <TextField
+          onChange={updateDescription}
           value={description}
           placeholder="追加"
           variant="outlined"
